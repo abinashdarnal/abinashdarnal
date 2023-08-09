@@ -9,19 +9,30 @@ import "./index.css";
 
 function Header() {
   const [catData, setData] = useState([""]);
-  const [nav, setNav] = useState(false);
-  const [cat, setcat] = useState(false);
   useEffect(() => {
     fetch("https://fakestoreapi.com/products/categories")
       .then((resolve) => resolve.json())
       .then((categories) => setData(categories));
   });
 
+  const [nav, setNav] = useState(false);
   const toggleNav = () => {
     setNav(!nav);
   };
+
+  const [cat, setcat] = useState(false);
   const toggleCat = () => {
     setcat(!cat);
+  };
+
+  const [search, setSearch] = useState(" ");
+  const searchContent = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const searchButton = () => {
+    setSearch(search);
+    console.log(search);
   };
 
   return (
@@ -78,10 +89,11 @@ function Header() {
                   type="search"
                   name="search"
                   id="search"
+                  onChange={searchContent}
                   placeholder="Search..."
                   className="w-full rounded-l-2xl pl-3 px-2 focus:outline-none"
                 />
-                <button className="px-2">
+                <button className="px-2" onClick={searchButton}>
                   <FaMagnifyingGlass className="" />
                 </button>
               </div>
@@ -139,10 +151,11 @@ function Header() {
               type="search"
               name="search"
               id="search"
+              onChange={searchContent}
               placeholder="Search..."
               className="rounded-l-2xl pl-3 px-2 focus:outline-none"
             />
-            <button className="px-2 ">
+            <button className="px-2 " onClick={searchButton}>
               <FaMagnifyingGlass className="" />
             </button>
           </div>
